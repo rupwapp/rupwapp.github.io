@@ -1,13 +1,35 @@
 {
   "short_name": "RU PWApp",
   "name": "RU PWApp",
-  "icons": [
-    {
-      "src": "favicon.ico",
-      "sizes": "512x512 256x256 128x128 64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
-    }
-  ],
+  "icons": [{
+    "src": "icons/icon-16x16.png",
+      "sizes": "16x16",
+      "type": "png"
+    }, {
+    "src": "icons/icon-24x24.png",
+      "sizes": "24x24",
+      "type": "png"
+    }, {
+      "src": "icons/icon-32x32.png",
+      "sizes": "32x32",
+      "type": "png"
+    }, {
+      "src": "icons/icon-64x64.png",
+      "sizes": "64x64",
+      "type": "png"
+    }, {
+      "src": "icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "png"
+    }, {
+      "src": "icons/icon-256x256.png",
+      "sizes": "256x256",
+      "type": "png"
+    }, {
+      "src": "icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "png"
+    }],
   "start_url": "./index.html",
   "display": "standalone",
   "theme_color": "#2196f3",
