@@ -1,5 +1,6 @@
 import React, { PureComponent, Fragment } from 'react'
-import { Card, CardContent, Typography, Divider, List, ListItem, ListItemText } from 'material-ui'
+import { Card, CardContent, Typography, Divider, List, ListItem, ListItemText, CardActions, IconButton } from 'material-ui'
+import { ChevronLeft as IconLeft, ChevronRight as IconRight } from '@material-ui/icons'
 
 const weekDays = [
     'Domingo',
@@ -52,6 +53,15 @@ export default class MenuDay extends PureComponent {
                             </ListItem>
                         }
                     </List>
+                    <Divider />
+                    <CardActions>
+                        <IconButton disabled={!this.props.onPrevious} onClick={this.props.onPrevious || null}>
+                            <IconLeft />
+                        </IconButton>
+                        <IconButton disabled={!this.props.onNext} onClick={this.props.onNext || null} style={{ marginLeft: 'auto' }}>
+                            <IconRight />
+                        </IconButton>
+                    </CardActions>
                 </Card>
 
                 <Card style={{ marginBottom: 10 }}>
@@ -74,6 +84,15 @@ export default class MenuDay extends PureComponent {
                             </ListItem>
                         }
                     </List>
+                    <Divider />
+                    <CardActions>
+                        <IconButton disabled={!this.props.onPrevious} onClick={this.props.onPrevious || null}>
+                            <IconLeft />
+                        </IconButton>
+                        <IconButton disabled={!this.props.onNext} onClick={this.props.onNext || null} style={{ marginLeft: 'auto' }}>
+                            <IconRight />
+                        </IconButton>
+                    </CardActions>
                 </Card>
 
                 <Card>
@@ -96,6 +115,15 @@ export default class MenuDay extends PureComponent {
                             </ListItem>
                         }
                     </List>
+                    <Divider />
+                    <CardActions>
+                        <IconButton disabled={!this.props.onPrevious} onClick={this.props.onPrevious || null}>
+                            <IconLeft />
+                        </IconButton>
+                        <IconButton disabled={!this.props.onNext} onClick={this.props.onNext || null} style={{ marginLeft: 'auto' }}>
+                            <IconRight />
+                        </IconButton>
+                    </CardActions>
                 </Card>
             </div>
         )

@@ -1,7 +1,7 @@
-import React, { PureComponent as Component } from 'react';
+import React, { PureComponent } from 'react';
 import { HashRouter } from 'react-router-dom';
 import 'typeface-roboto';
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+import { MuiThemeProvider, createMuiTheme, Snackbar } from 'material-ui';
 import themeColor from 'material-ui/colors/blue';
 import axios from 'axios'
 
@@ -15,23 +15,53 @@ const theme = createMuiTheme({
     },
 });
 
-class App extends Component {
+const hasLocalStorage = typeof (Storage) !== "undefined"
+const localStorageKey = 'menu-restaurant';
+
+class App extends PureComponent {
 
     constructor(props) {
         super(props);
+        const cachedData = this.cachedData
         this.state = {
-            menu: [],
+            menu: cachedData,
+            cached: cachedData.length,
             error: false,
         }
+
     }
 
+    get cachedData() {
+        let data;
+        if (hasLocalStorage && (data = localStorage.getItem(localStorageKey)))
+            return JSON.parse(data)
+        else
+            return [];
+    }
+
+    set cachedData(data) {
+        if (hasLocalStorage)
+            localStorage.setItem(localStorageKey, JSON.stringify(data))
+    }
 
     fetchData() {
         return axios.get('https://cors-anywhere.herokuapp.com/https://www.ruapp.com.br/api/v1/menu?restaurant_id=1');
     }
 
+    updateMenuData() {
+        this.fetchData()
+            .then(({ data }) => {
+                this.setState({ menu: data, cached: true })
+                this.cachedData = data;
+            })
+            .catch(err => {
+                console.error(err);
+                this.setState({ error: true })
+            })
+    }
+
     componentDidMount() {
-        this.fetchData().then(({ data }) => this.setState({ menu: data }))
+        this.updateMenuData()
     }
 
     render() {
@@ -39,10 +69,14 @@ class App extends Component {
             <HashRouter>
                 <MuiThemeProvider theme={theme}>
                     <Header />
-                    <main>
-                        <MenuSwiper menu={this.state.menu} />
-                    </main>
+                    <MenuSwiper menu={this.state.menu} cached={this.state.cached} />
                     <UpdateSnackbar appServiceWorker={this.props.appServiceWorker} />
+                    <Snackbar
+                        open={this.state.error}
+                        autoHideDuration={6000}
+                        onClose={() => this.setState({ error: false })}
+                        message={this.state.cached ? "Você está offline. Mostrando informações antigas." : "Você esta offline e as informações ainda não foram obtidas."}
+                    />
                 </MuiThemeProvider>
             </HashRouter>
         );
