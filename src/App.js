@@ -7,6 +7,7 @@ import axios from 'axios'
 
 import Header from './components/Header'
 import MenuSwiper from './components/MenuSwiper'
+import UpdateSnackbar from './components/UpdateSnackbar'
 
 const theme = createMuiTheme({
     palette: {
@@ -41,6 +42,7 @@ class App extends Component {
                     <main>
                         <MenuSwiper menu={this.state.menu} />
                     </main>
+                    <UpdateSnackbar appServiceWorker={this.props.appServiceWorker} />
                 </MuiThemeProvider>
             </HashRouter>
         );

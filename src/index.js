@@ -5,5 +5,5 @@ import App from './App';
 import AppServiceWorker from './registerServiceWorker';
 
 const appSW = new AppServiceWorker();
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<App appServiceWorker={appSW} />, document.getElementById('root'));
 appSW.register();
