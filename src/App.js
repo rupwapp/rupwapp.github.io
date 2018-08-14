@@ -24,6 +24,7 @@ class App extends PureComponent {
         super(props);
         const cachedData = this.cachedData
         this.state = {
+            loading: false,
             menu: cachedData,
             cached: cachedData.length,
             error: false,
@@ -48,17 +49,20 @@ class App extends PureComponent {
         return axios.get('https://cors-anywhere.herokuapp.com/https://www.ruapp.com.br/api/v1/menu?restaurant_id=1');
     }
 
-    updateMenuData() {
+    updateMenuData = () => {
+        this.setState({ loading: true })
         this.fetchData()
             .then(({ data }) => {
-                this.setState({ menu: data, cached: true })
+                this.setState({ menu: data, cached: true, loading: false })
                 this.cachedData = data;
             })
             .catch(err => {
                 console.error(err);
-                this.setState({ error: true })
+                this.setState({ error: true, loading: false })
             })
     }
+
+
 
     componentDidMount() {
         this.updateMenuData()
@@ -68,7 +72,7 @@ class App extends PureComponent {
         return (
             <HashRouter>
                 <MuiThemeProvider theme={theme}>
-                    <Header />
+                    <Header loading={this.state.loading} onRefresh={this.updateMenuData} />
                     <MenuSwiper menu={this.state.menu} cached={this.state.cached} />
                     <UpdateSnackbar appServiceWorker={this.props.appServiceWorker} />
                     <Snackbar

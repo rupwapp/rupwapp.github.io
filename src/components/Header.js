@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { AppBar, Toolbar, Typography, IconButton, Drawer, List, ListItem, ListItemText } from 'material-ui'
-import MenuIcon from '@material-ui/icons/Menu'
+import { Menu as MenuIcon, Refresh as RefreshIcon } from '@material-ui/icons'
 
 export default class Header extends PureComponent {
     constructor(props) {
@@ -23,9 +23,18 @@ export default class Header extends PureComponent {
                         >
                             <MenuIcon />
                         </IconButton>
-                        <Typography variant="title" color="inherit">
-                            Cardápio
-                    </Typography>
+                        <Typography variant="title" color="inherit" style={{ flexGrow: 1 }} >Cardápio</Typography>
+                        {this.props.onRefresh &&
+                            <div className={this.props.loading ? 'animation-rotate' : undefined} >
+                                <IconButton
+                                    color="inherit"
+                                    aria-label="atualizar"
+                                    onClick={this.props.onRefresh}
+                                >
+                                    <RefreshIcon />
+                                </IconButton>
+                            </div>
+                        }
                     </Toolbar>
                 </AppBar>
                 <Drawer open={this.state.menuOpen} onClose={this.toggleMenu}>
